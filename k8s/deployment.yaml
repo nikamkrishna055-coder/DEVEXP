@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-apsit
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-apsit
+  template:
+    metadata:
+      labels:
+        app: devops-apsit
+    spec:
+      containers:
+        - name: devops-apsit
+          image: devops-apsit:2.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
