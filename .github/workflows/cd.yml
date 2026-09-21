@@ -37,8 +37,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image
-        run: docker build -f docker/Dockerfile -t pushkar654/devops-apsit:2.0 .
+   - name: Build Docker image
+  run: docker build -f docker/Dockerfile -t krishnanikam91/devops-apsit:2.0 .
 
-      - name: Push Docker image
-        run: docker push pushkar654/devops-apsit:2.0
+- name: Push Docker image
+  run: docker push krishnanikam91/devops-apsit:2.0
