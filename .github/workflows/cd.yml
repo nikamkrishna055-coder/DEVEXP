@@ -32,13 +32,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
+        if: ${{ (secrets.DOCKERHUB_USERNAME != '' || secrets.DOCKER_USERNAME != '') && (secrets.DOCKERHUB_TOKEN != '' || secrets.DOCKERHUB_PASSWORD != '' || secrets.DOCKER_PASSWORD != '') }}
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME != '' && secrets.DOCKERHUB_USERNAME || secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN != '' && secrets.DOCKERHUB_TOKEN || secrets.DOCKERHUB_PASSWORD != '' && secrets.DOCKERHUB_PASSWORD || secrets.DOCKER_PASSWORD }}
 
-   - name: Build Docker image
-  run: docker build -f docker/Dockerfile -t krishnanikam91/devops-apsit:2.0 .
+      - name: Build Docker image
+        run: docker build -f docker/Dockerfile -t krishnanikam91/devops-apsit:2.0 .
 
-- name: Push Docker image
-  run: docker push krishnanikam91/devops-apsit:2.0
+      - name: Push Docker image
+        if: ${{ (secrets.DOCKERHUB_USERNAME != '' || secrets.DOCKER_USERNAME != '') && (secrets.DOCKERHUB_TOKEN != '' || secrets.DOCKERHUB_PASSWORD != '' || secrets.DOCKER_PASSWORD != '') }}
+        run: docker push krishnanikam91/devops-apsit:2.0
